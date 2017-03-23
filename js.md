@@ -94,4 +94,14 @@
         return str.replace(/\s/g,'%20');
     }
 
-
+## 斐波那契数列
+    输入整数n，输出斐波那契数列第n项
+    function Fibonacci(n){
+        var arr = [];
+        arr[0] = 0;
+        arr[1] = 1;
+        for(var i = 2; i <= n; i++) {
+            arr[i] = arr[i - 1] + arr[i - 2];
+        }
+        return arr[n];
+    }
