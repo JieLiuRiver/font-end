@@ -33,7 +33,7 @@
 
         p1.IntroduceChinese();
 
-## 关闭本页会弹出窗口
+### 关闭本页会弹出窗口
     <body onunload=leaveWindow()>
 
     <script>
@@ -44,7 +44,7 @@
     </body>
 
 
-## 显示时间
+### 显示时间
     function ButtonClock() {
     day = new Date();
     HourNow = day.getHours();
@@ -66,7 +66,7 @@
     setTimeout('ButtonClock()', 1000);
     }
 
-## 全部选取
+### 全部选取
     <form name="text">
         <input type=button value="全部选取" onclick="SelectAll('text.select')"><br>
         <textarea name="select" rows=10 cols=20>请在此输入您的建议：</textarea>
@@ -78,7 +78,7 @@
     }
 
 
-## 文本框中控制输入字数
+### 文本框中控制输入字数
     <textarea name=message wrap=physical rows=5 cols=30  onKeyDown="MaxInput(this.form)" onKeyUp="MaxInput(this.form)"></textarea>
     <input readonly type=text name=TLength size=3  value="100">个字符</font>
     maxLength = 99;
@@ -88,15 +88,16 @@
         else form.TLength.value = maxLength - form.message.value.length;
     }
 
-## 替换空格
+### 替换空格
     function replaceSpace(str)
     {
         return str.replace(/\s/g,'%20');
     }
 
-## 斐波那契数列
-    输入整数n，输出斐波那契数列第n项
-    function Fibonacci(n){
+
+### 斐波那契数列
+    需求： 输入整数n，输出斐波那契数列第n项
+    function Fibonacci(n){
         var arr = [];
         arr[0] = 0;
         arr[1] = 1;
@@ -105,7 +106,6 @@
         }
         return arr[n];
     }
-
 
 ### 台阶
     一只青蛙一次可以跳上1级，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
@@ -271,3 +271,397 @@
     drive() 方法。
 
 
+### 从输入网址到显示网页的过程分析
+    1、浏览器中输入网址。
+    2、发送至DNS服务器并获得域名对应的WEB服务器的ip地址。
+    3、与WEB服务器建立TCP连接。
+    4、浏览器向WEB服务器的ip地址发送相应的http请求。
+    5、WEB服务器响应请求并返回指定URL的数据，或错误信息，如果设定重定向，则重定向到新的URL地址。
+    6、浏览器下载数据后解析HTML源文件，解析的过程中实现对页面的排版，解析完成后在浏览器中显示基础页面。
+    7、分析页面中的超链接并显示在当前页面，重复以上过程直至无超链接需要发送，完成全部显示。
+
+    连接3次握手简述：
+        客户端需要确认服务端有没有空为我服务？
+        我需要问小明有没有空一起玩lol？
+            我: 小明，玩游戏？
+            小明： 好，来来来！
+            我： ok，我建房间。
+
+
+    关闭连接四次挥手：
+        客户端要断开连接
+        我要下班回家
+            我： 到点了，一起下班走吧
+            小伙子： 好，我们的工作做完了，等一下我。
+            ...1h后
+            小伙子： 好了，我们走吧
+            我： 走走走...
+
+### Doctype作用
+    其实就是告诉浏览器用什么用模式去解析文档， 使用doctype可以避免浏览器到怪异模式， 如果说页面没有DOCTYPE声明,浏览器会使用怪异模式解析文档， 这意味着什么，意味着浏览器会按照自身浏览器的方式去解析渲染页面，在不同浏览器会有不同的样式，不同到表现，而这并不是我们希望看到的。
+
+### 渐进增强跟优雅降级之间的区别
+    其实渐进增强，比方说，先写一个简单功能的页面，能满足各版本浏览器，后面针对高级浏览器增加一些css3绚丽的功能，让整个的体验变得更加好， 因此这种方式更多的关注的是内容本身，这就是一个向上兼容到过程。
+        而优雅降级呢，关注的就是高级的浏览器，以一种发展的眼光看待，例如，一开始，就实现出一个绚丽的功能，后面再针对低版本的浏览器进行向下兼容。这种方式，是更为常见到一种方式。
+
+### 无样式内容闪烁
+    其实指的是文档的样式闪烁。 造成闪烁的原因有2个：
+        1.使用了@import方法导入css，  在IE下碰到这玩意，它会先去加载整个文档到DOM, 之后再去加载css，中间到这个过程，文档样式是从无到有的一个过程。
+        2.样式表放在文档页面到不同位置，IE5/6会造成页面闪烁，应该把样式表放在head中。
+
+### href传递中文，get 方式请求中文乱码问题
+    href传递中文可以这样用： escape(field)方法处理中文
+    使用unescape()方法还原
+
+    对于get方式请求，js可以对整个url进行一次： encodeURI(url)处理, 把字符串作为 URI 进行编码,例如：
+        document.write(encodeURI("http://www.w3school.com.cn/My first/"))
+        输出：http://www.w3school.com.cn/My%20first/
+        如果 URI 组件中含有分隔符，比如 ? 和 #，　使用encodeURIComponent()
+
+    还有一个方法： encodeURIComponent()， 作用是把字符串作为URI组件进行编码，例如：
+    console.log( encodeURIComponent("http://www.helijie.com/blog") )
+        输出：
+            http%3A%2F%2Fwww.heliujie.com%2Fblog
+
+    获取到url上经过encodeURIComponent()处理的参数后，需要转换， 使用方法：
+        decodeURIComponent( param )
+
+### css动画与js动画之间的区别
+    总体而言，对于简单的动画，不需要中间过程控制的动画，不需要太多条件控制的动画，使用css动画。 相反，对于复杂的动画，需要控制中间流程的动画，应该使用js动画这样可以控制工作流。
+        其实如果我们使用js写动画，它的控制能力很强，不会有什么兼容性，而css则有兼容问题
+
+### 写一个匹配特殊字符的正则
+    /((?=[\x21-\x7e]+)[^A-Za-z0-9])/.test('#%43#*#&*#^&*#')
+        1.小括号()代表一个子表达式的开始和结束的位置
+        2.问好?意味着会匹配前面的子表达式零次或者一次
+        3.中括号[],  意思是一个中括号表达式的开始
+        4.(?=pattern), 意思是匹配到pattern的字符串，它的开始处进行匹配查找字符串
+        5. \xn匹配n， n是十六进制转义值，必须是2个数字长
+        6.+号匹配前面的子表达式一次或者多次
+        7.[^A-Z]匹配任何不在A-Z范围内的任意字符
+
+
+### 计算字符串的字节长度
+    function getLenByReg(str){
+        var result = 0;
+        for (var i = 0; i < str.length; i++) {
+            var reg = (/[^\x00-\xff]/ig);
+            if (reg.test(str[i])) {
+                result += 2;
+            } else {
+                result += 1;
+            }
+        }
+        return result;
+    }
+
+
+### iframe跨域访问
+    由于浏览器同源策略，凡是发送请求url的协议、域名、端口三者之间任意一与当前页面地址不同即为跨域。
+    document.getElementById("myIFrame").contentWindow.document
+    只有在同源的情况下，父窗口和子窗口才能通信；如果跨域，就无法拿到对方的DOM
+    window.parent.document.body
+    对于完全不同源的网站，目前有4种方法，可以解决跨域窗口的通信问题
+        1. 片段识别符
+            指的是，URL的#号后面的部分，
+            比如http://example.com/x.html#fragment的#fragment,
+            如果只是改变片段标识符，页面不会重新刷新,
+            父窗口可以把信息，写入子窗口的片段标识符
+            var src = originURL + '#' + data; document.getElementById('myIFrame').src = src;
+            子窗口通过监听hashchange事件得到通知
+            window.onhashchange = checkMessage;
+            function checkMessage() {
+              var message = window.location.hash;
+              // ...
+            }
+            子窗口也可以改变父窗口的片段标识符
+            parent.location.href= target + “#” + hash;
+
+        2. 跨文档通信API
+           HTML5为了解决这个问题，引入了一个全新的API
+           window对象新增了一个window.postMessage方法，允许跨窗口通信，不论这两个窗口是否同源
+           父窗口aaa.com向子窗口bbb.com发消息，调用postMessage方法就可以了
+           var popup = window.open('http://bbb.com', 'title');
+           popup.postMessage('Hello World!', 'http://bbb.com');
+           postMessage方法的第一个参数是具体的信息内容，第二个参数是接收消息的窗口的源（origin），
+           即“协议 + 域名 + 端口”。也可以设为*，表示不限制域名，向所有窗口发送
+           子窗口向父窗口发送消息的写法类似
+           window.opener.postMessage('Nice to see you', 'http://aaa.com');
+           父窗口和子窗口都可以通过message事件，监听对方的消息
+           window.addEventListener('message', function(e) {
+              console.log(e.data);
+           },false);
+
+           message事件的事件对象event，提供以下三个属性
+           1. event.source：发送消息的窗口
+           2. event.origin: 消息发向的网址
+           3. event.data: 消息内容
+
+           子窗口通过event.source属性引用父窗口，然后发送消息
+           window.addEventListener('message', receiveMessage);
+           function receiveMessage(event) {
+              event.source.postMessage('Nice to see you!', '*');
+           }
+
+           window.addEventListener('message', receiveMessage);
+            function receiveMessage(event) {
+              if (event.origin !== 'http://aaa.com') return;
+              if (event.data === 'Hello World') {
+                  event.source.postMessage('Hello', event.origin);
+              } else {
+                console.log(event.data);
+              }
+            }
+
+        3. JSONP
+            这种方式主要是通过动态插入一个script标签。浏览器对script的资源引用没有同源限制，同时资源加载到页面后会立即执行（没有阻塞的情况下）。
+
+            var _script = document.createElement('script');
+            _script.type = 'text/javascript';
+            _script.src = "http://localhost8888/jsonp?callback=f";
+            var head = document.getElemenetByTagName('head')[0];
+            head.appendChild(_script);
+
+         4. 通过修改document.domain来跨子域
+            跨域限制
+                限制之一： 不能通过ajax的方法去请求不同源中的文档
+                限制之二： 浏览器中不同域的框架之间是不能进行js的交互操作的
+            不同的框架 之间（父子或同辈），是能够获取到彼此的window对象
+            不能使用获取到的window对象的属性和方法（html5中的 postMessage方法是一个例外）
+
+            父页面：(设置document.domain)
+                <iframe src="http://abc.com/a.html" if="iframe" onload="test()"></iframe>
+                <script>
+                    document.domain = 'abc.com';
+                    function test() {
+                        console.log('子域window', document.getElementById('iframe').contentWindow);
+                    }
+                </script>
+
+            子页面：（也要设置）
+                document.domain = 'abc.com';
+
+            这样我们就可以通过js访问到iframe中的各种属性和对象了
+
+### Cookie, LocalStorage, SessionStorage 之间的区别
+    Web storage 有2种形式
+        1. LocalStorage
+        2. SessionStorage
+        通过js设置值， 当页面重新刷新后，依然能获取到。跟cookie比较起来，localstorage安装在客户端，不需要请求服务请数据。
+        sessionstorage保存在window对象中，关闭窗口，数据销毁。
+        1. localStorage.length
+        2. localStorage.setItem(key, value)
+        3. localStorage.getItem(key)
+        4. localStorage.key(n)
+        5. localStorage.removeItem()
+        6. localStorage.clear()
+
+
+### 关于 script defer script async
+    <script src="script.js"></script>
+    没有 defer 或 async，浏览器会立即加载并执行指定的脚本，“立即”指的是在渲染该 script 标签之下的文档元素之前，也就是说不等待后续载入的文档元素，读到就加载并执行。
+    <script async src="script.js"></script>
+    有 async，加载和渲染后续文档元素的过程将和 script.js 的加载与执行并行进行（异步）。
+    <script defer src="myscript.js"></script>
+    有 defer，加载后续文档元素的过程将和 script.js 的加载并行进行（异步），但是 script.js 的执行要在所有元素解析完成之后，DOMContentLoaded 事件触发之前完成。
+
+    把所有脚本都丢到 </body> 之前是最佳实践，因为对于旧浏览器来说这是唯一的优化选择，此法可保证非脚本的其他一切元素能够以最快的速度得到加载和解析
+
+
+### 冒泡排序
+    每一次对比相邻2个数据的大小，小的排在前面，如果前面数据大于后者，则交换位置。
+     *    用2层for循环，外层第一个数到倒数第二个数，内层从外层的后一个数字到最后一个数字。
+     *    1.简单实用易于理解
+     *    2.比较次数多，效率较低
+     function bubbleSort(arr){
+         var len = arr.length;
+         for (var i = 0; i < len - 1; i++) {
+           for (var j = i + 1; j < len; j++) {
+             if (arr[i] > arr[j]) {
+               var temp = arr[i];
+               arr[i] = arr[j];
+               arr[j] = temp;
+             }
+           }
+         }
+         return arr;
+       }
+
+
+### 快速排序
+    先找到一个基准点（一般指数组的中部），然后数组被该基准点分为两部分，依次与该基准点数据比较，如果比它小，放左边；反之，放右边,   左右分别用一个空数组去存储比较后的数据。最后递归执行上述操作，直到数组长度<=1
+     *   1. 快速，常用
+     *   2. 需要另外声明两个数组，浪费了内存空间资源
+    function quickSort(arr){
+          if(arr.length<=1){
+              return arr;
+          }
+          var midIndex=Math.floor(arr.length/2);
+          /* 取基准点的值,splice(index,1)函数可以返回数组中被删除的那个数arr[index+1] */
+          var midIndexVal=arr.splice(midIndex,1);
+          var left=[];
+          var right=[];
+          for(var i=0;i<arr.length;i++){
+              if(arr[i]<midIndexVal){
+                  left.push(arr[i]); // 比基准点小的放在左边数组
+              }
+              else{
+                  right.push(arr[i]); // 比基准点大的放在右边数组
+              }
+          }
+          /* 递归执行以上操作,对左右两个数组进行操作，直到数组长度为<=1；*/
+          return quickSort(left).concat(midIndexVal,quickSort(right));
+     };
+
+### this指向问题
+    var length = 10;
+      function fn() {
+        console.log(this.length);
+      }
+      var obj = {
+        length: 5,
+        method: function(fn) {
+          fn();  // 10
+          arguments[0]();  // 这里arguments[0],访问的是fn，对象访问可以用这种方式。 相当于arguments调用fn, 因此这里打印出2
+        }
+      };
+      obj.method(fn, 1);
+
+
+### 声明提前
+    function fn(a) {
+        console.log(a);
+        var a = 2;
+        function a() {}
+        console.log(a);
+      }
+      fn(1);
+      var 和 函数声明同时存在，函数声明优先级比较高，
+      因此一进来，打印出的是 function a(){}; 接着往下执行，a被重新赋值，因此打印出2
+
+### 局部变量和全局变量
+      var f = true;
+      if (f === true) {
+        var a = 10;
+      }
+      function fn() {
+        var b = 20;
+        c = 30;
+      }
+      fn();
+      console.log(a); // 10
+      console.log(b); // 报错
+      console.log(c); // 30
+
+### 给字符串、数字上挂属性，并访问
+      var a = 10;
+      a.pro = 10;
+      console.log(a.pro + a);
+      a是一个数字，a下挂一个属性pro等于0， 不会报错，一旦访问，变成undefined, undefined + 10 => NaN
+
+      var s = 'hello';
+      s.pro = 'world';
+      console.log(s.pro + s);
+      undefined + 'hello' => "undefinedhello"
+
+### 判断一个字符串中出现次数最多的字符，并统计次数
+    function findStrMostTimes(str){
+        var obj = {};
+        var max = -1;
+        var letter = '';
+        for (var i = 0; i < str.length; i++) {
+          if (typeof obj[str[i]] == 'undefined') {
+            obj[str[i]] = 1;
+          } else {
+            obj[str[i]]++;
+          }
+          if (obj[str[i]] > max) {
+            max = obj[str[i]];
+            letter = str[i];
+          }
+        }
+        console.log('letter', letter, 'times', max);
+      }
+
+
+### 去掉数组中重复的数字
+     function uniqueArr(arr){
+        for (var i = 0; i < arr.length; i++ ) {
+            for (var j = i + 1; j < arr.length;) {
+              if (arr[i] == arr[j]) {
+                arr.splice(j, 1);
+                j--;
+              }
+            }
+        }
+      }
+      uniqueArr([1,2,4,2,1,5,6,3,3,2,3]);
+
+### http://huaren-it.com/cat/%E5%88%B7%E9%A2%98/
+
+
+### cookie读写删
+    //JS操作cookies方法!
+
+    //写cookies
+
+    function setCookie(name,value)
+    {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+
+    //读取cookies
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+        if(arr=document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+
+    //删除cookies
+    function delCookie(name)
+    {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval=getCookie(name);
+        if(cval!=null)
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    }
+    //使用示例
+    setCookie("name","hayden");
+    alert(getCookie("name"));
+
+
+### Flex布局是什么
+    用来为盒状模型提供最大的灵活性。
+    任何一个容器都可以指定为Flex布局。
+    Webkit内核的浏览器，必须加上-webkit前缀。子元素的float、clear和vertical-align属性将失效。
+    采用Flex布局的元素，称为Flex容器（flex container），简称"容器"。
+    它的所有子元素自动成为容器成员，称为Flex项目（flex item），简称"项目"
+
+### 柯里化
+    function cury(fn){
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function(){
+            var innerArgus = Array.prototype.slice.call(arguments);
+            var finArgus = args.concat(innerArgus);
+            return fn.apply(null, finArgus);
+        }
+    }
+
+### Bind函数
+    function bind(fn, context){
+        var args = Array.prototype.slice.call(arguments, 2);
+        return function(){
+            var innerArgus = Array.prototype.slice.call(arguments);
+            var finArgus = args.concat(innerArgus);
+            return fn.apply(context, finArgus);
+        }
+    }
